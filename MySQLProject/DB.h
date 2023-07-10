@@ -57,7 +57,7 @@ bool fetch_user_info(user& user) {
         return false;
     }
 
-    strcpy(user.useName,row[0]);
+    strcpy_s(user.useName,row[0]);
     cout << "userName: " << user.useName << endl;  //打印ID
 
     //4.返回结果
@@ -70,5 +70,35 @@ bool fetch_user_info(user& user) {
 
     return true;
 }
+bool insert_user_info(user &user){
+    MYSQL mysql;
+    char sql[256];
+    bool ret = false;
+
+
+    //1.连接到数据库
+    if (connect_db(mysql) == false) {
+        return false;
+    }
+
+    //2.根据用户名和密码获取用户信息(id, level_id)
+    snprintf(sql, 256, "INSERT INTO user VALUES ('%s', MD5('%s'), '%s')",user.useName, user.passWord, user.phoneNum);
+    ret = mysql_query(&mysql, sql); //成功返回0
+
+    if (ret) {
+        printf("数据库插入出错，%s 错误原因： %s\n", sql, mysql_error(&mysql));
+        mysql_close(&mysql);
+        return false;
+    }
+
+    //3.返回结果
+
+    //关闭数据库
+    mysql_close(&mysql);
+
+    return true;
+}
+
+
 
 
