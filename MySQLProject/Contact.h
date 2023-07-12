@@ -1,35 +1,57 @@
 #include"DB.h"
 //仅仅只是界面设计，具体函数在类里面
-int Add() {								//增
+int Add(user &user) {								//增
+	contact c;
+	bool ret;
 	cout << "姓    名：";
+	cin >> c.name;
 	cout << "电话号码：";
+	cin >> c.phone;
 	cout << "邮    箱：";
+	cin >> c.email;
 	cout << "关    系：";
+	cin >> c.relation;
+	ret=user.addContact(c);
+	if (ret) {
+		cout << "插入成功！" << endl;
+		system("pause");
+	}
+	return 0;
+}
+int Delete(user& user) {							//删
+	contact c;
+	cout << "姓    名：";
+	cin >> c.name;
+	cout << "电话号码：";
+	cin >> c.phone;
+	user.deleteContact(c);
 	//判断是否存在
 	return 0;
 }
-int Delete() {							//删
+int Update(user& user) {							//改
+	contact c;
 	cout << "姓    名：";
+	cin >> c.name;
 	cout << "电话号码：";
-	//判断是否存在
-	return 0;
-}
-int Update() {							//改
-	cout << "姓    名：";
-	cout << "电话号码：";
+	cin >> c.phone;
 	cout << "邮    箱：";
+	cin >> c.email;
 	cout << "关    系：";
+	cin >> c.relation;
+	user.updateContact(c);
 	return 0;
 }
-int Check() {							//查
+int Check(user& user) {							//查
+	contact c;
 	cout << "姓    名：";
-	cout << "电话号码：";
-	cout << "邮    箱：";
-	cout << "关    系：";
+	cin >> c.name;
+	user.checkContact(c);
 	return 0;
 }
-int Show() {							//显示所有
+int Show(user& user) {							//显示所有
 	//直接显示
+	cout << "所有联系人：" << endl;
+	user.showContact();
 	return 0;
 }
 int MainPage(user &user) {
@@ -48,11 +70,11 @@ int MainPage(user &user) {
 		system("cls");
 		switch (n)
 		{
-		case 1: Add();  break;
-		case 2:Delete();  break;
-		case 3:Update();  break;
-		case 4:Check();  break;
-		case 5:Show();  break;
+		case 1: Add(user);  break;
+		case 2:Delete(user);  break;
+		case 3:Update(user);  break;
+		case 4:Check(user);  break;
+		case 5:Show(user);  break;
 		case 6:return 0; break;
 		default:cout << "输入错误"; system("pause"); break;
 		}

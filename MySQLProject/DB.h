@@ -1,29 +1,6 @@
 #pragma once
 #include"user.h"
 
-#define DB_NAME  "contact"
-#define DB_HOST  "127.0.0.1"
-#define DB_PORT  3306
-#define DB_USER  "root"
-#define DB_USER_PASSWD  "mysql"
-
-bool connect_db(MYSQL& mysql) {
-
-    //1.初始化数据库句柄
-    mysql_init(&mysql);
-
-    //2.设置字符编码
-    mysql_options(&mysql, MYSQL_SET_CHARSET_NAME, "gbk");
-
-    //3.连接数据库
-    if (mysql_real_connect(&mysql, DB_HOST, DB_USER, DB_USER_PASSWD, DB_NAME, DB_PORT, NULL, 0) == NULL) {
-        cout << "数据库连接出错， 错误原因: " << mysql_error(&mysql) << endl;
-        return false;
-    }
-
-    return true;
-}
-
 bool fetch_user_info(user& user) {
     MYSQL mysql;
     MYSQL_RES* res; //查询结果集
